@@ -1,0 +1,11 @@
+{
+    "name": "Bé Học Vui",
+    "short_name": "Bé Học Vui",
+    "description": "Trò chơi học tập vui nhộn dành cho bé 3–4 tuổi",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#FFF8E7",
+    "theme_color": "#FFB703",
+    "orientation": "portrait",
+    "lang": "vi-VN"
+}

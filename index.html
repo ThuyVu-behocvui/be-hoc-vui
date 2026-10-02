@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFB703">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta name="apple-mobile-web-app-title" content="Bé Học Vui">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1,
+               maximum-scale=1,
+               user-scalable=no">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Bé học vui</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+<!-- ========================================
+     MÀN HÌNH CHỌN CHỦ ĐỀ
+     ======================================== -->
+
+<div id="topic-screen">
+
+    <h1>🎈 BÉ HỌC VUI</h1>
+
+    <div id="topic-subtitle">
+        Bé muốn học gì hôm nay?
+    </div>
+
+
+    <div id="topic-list">
+
+        <!-- Số -->
+
+        <button
+            class="topic-button"
+            data-topic="numbers"
+        >
+
+            <div class="topic-icon">
+                🔢
+            </div>
+
+            <div class="topic-name">
+                Tìm số
+            </div>
+
+        </button>
+
+
+        <!-- Màu sắc -->
+
+        <button
+            class="topic-button"
+            data-topic="colors"
+        >
+
+            <div class="topic-icon">
+                🎨
+            </div>
+
+            <div class="topic-name">
+                Tìm màu
+            </div>
+
+        </button>
+
+
+        <!-- Hoa quả -->
+
+        <button
+            class="topic-button"
+            data-topic="fruits"
+        >
+
+            <div class="topic-icon">
+                🍎
+            </div>
+
+            <div class="topic-name">
+                Hoa quả
+            </div>
+
+        </button>
+
+
+        <!-- Con vật -->
+
+        <button
+            class="topic-button"
+            data-topic="animals"
+        >
+
+            <div class="topic-icon">
+                🐶
+            </div>
+
+            <div class="topic-name">
+                Con vật
+            </div>
+
+        </button>
+
+
+        <!-- Phương tiện -->
+
+        <button
+            class="topic-button"
+            data-topic="vehicles"
+        >
+
+            <div class="topic-icon">
+                🚗
+            </div>
+
+            <div class="topic-name">
+                Phương tiện
+            </div>
+
+        </button>
+
+
+        <!-- Gia đình -->
+
+        <button
+            class="topic-button"
+            data-topic="family"
+        >
+
+            <div class="topic-icon">
+                👨‍👩‍👧
+            </div>
+
+            <div class="topic-name">
+                Gia đình
+            </div>
+
+        </button>
+
+    </div>
+
+</div>
+
+    <div class="game">
+<button id="back-button">
+    ← Chủ đề
+</button>
+
+        <h1 id="game-title">🔢 TÌM SỐ</h1>
+
+        <!-- Thông tin góc trái -->
+<div id="game-info">
+
+    <div id="progress">
+        Câu 1 / 10
+    </div>
+
+    <div id="score">
+        ⭐ 0
+    </div>
+
+</div>
+
+<!-- Câu hỏi -->
+<div id="question">
+    Con hãy tìm số <strong>1</strong>
+</div>
+
+        <!-- Khu vực bong bóng -->
+        <div id="game-board"></div>
+
+        <!-- Thông báo -->
+        <div id="result"></div>
+
+        <!-- Màn hình hoàn thành -->
+        <div id="finish-screen">
+
+            <div id="finish-title">
+                🎉 GIỎI LẮM!
+            </div>
+
+            <div id="finish-message">
+                Con đã hoàn thành!
+            </div>
+
+            <div id="final-stars">
+                ⭐⭐⭐⭐⭐
+            </div>
+
+            <div id="final-score">
+                0 / 10 câu đúng
+            </div>
+
+            <button id="restart-button">
+                🔄 Chơi lại
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="game.js"></script>
+
+</body>
+
+</html>

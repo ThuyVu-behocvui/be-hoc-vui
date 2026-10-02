@@ -1,0 +1,1083 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background: #eaf7ff;
+
+    min-height: 100vh;
+
+    /* Không cho trình duyệt kéo trang khi bé chạm game */
+    overscroll-behavior: none;
+
+    /* Tối ưu cảm ứng */
+    touch-action: manipulation;
+}
+
+
+.game {
+display: none;
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 800px;
+
+    min-height: 100vh;
+
+    margin: auto;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+/* =========================
+   TIÊU ĐỀ
+   ========================= */
+
+h1 {
+
+    font-size: 40px;
+
+    margin: 10px 0 10px;
+}
+
+
+/* =========================
+   THÔNG TIN GÓC TRÁI
+   ========================= */
+
+#game-info {
+
+    position: absolute;
+
+    top: 20px;
+
+    left: 20px;
+
+    text-align: left;
+
+    z-index: 10;
+}
+
+
+/* =========================
+   TIẾN TRÌNH
+   ========================= */
+
+#progress {
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+
+/* =========================
+   ĐIỂM
+   ========================= */
+
+#score {
+
+    font-size: 24px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   CÂU HỎI
+   ========================= */
+
+#question {
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    margin-top: 20px;
+
+    margin-bottom: 15px;
+
+    padding-left: 140px;
+
+    padding-right: 20px;
+}
+
+
+/* =========================
+   KHU VỰC GAME
+   ========================= */
+
+#game-board {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 550px;
+
+    overflow: hidden;
+
+    border-radius: 25px;
+
+    /* Tối ưu cảm ứng */
+    touch-action: manipulation;
+}
+
+
+/* =========================
+   BONG BÓNG
+   ========================= */
+
+.bubble {
+
+    position: absolute;
+
+    width: 110px;
+
+    height: 110px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 46px;
+
+    font-weight: bold;
+
+    color: white;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    /* Không hiện menu khi nhấn giữ */
+    -webkit-touch-callout: none;
+
+    /* Loại bỏ highlight khi chạm */
+    -webkit-tap-highlight-color: transparent;
+
+    box-shadow:
+
+        inset -10px -10px 20px
+        rgba(0, 0, 0, 0.15),
+
+        inset 10px 10px 20px
+        rgba(255, 255, 255, 0.55),
+
+        0 6px 12px
+        rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.15s;
+
+    /* Giúp trình duyệt xử lý chuyển động tốt hơn */
+    will-change: transform;
+}
+
+
+/* =========================
+   ÁNH SÁNG TRÊN BONG BÓNG
+   ========================= */
+
+.bubble::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 28px;
+
+    height: 17px;
+
+    background:
+        rgba(255, 255, 255, 0.6);
+
+    border-radius: 50%;
+
+    top: 19px;
+
+    left: 24px;
+
+    transform: rotate(-30deg);
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   KHI RÊ CHUỘT
+   ========================= */
+
+.bubble:hover {
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   KHI CHẠM
+   ========================= */
+
+.bubble:active {
+
+    transform: scale(0.94);
+}
+
+
+/* =========================
+   RUNG KHI SAI
+   ========================= */
+
+.bubble.wrong {
+
+    animation: shake 0.35s;
+}
+
+
+@keyframes shake {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================
+   NỔ
+   ========================= */
+
+
+
+/* ========================================
+   BONG BÓNG NỔ
+   ======================================== */
+
+.bubble.pop {
+
+    animation:
+        bubblePop 0.42s
+        ease-out forwards;
+
+    pointer-events: none;
+}
+
+
+@keyframes bubblePop {
+
+    0% {
+
+        transform:
+            scale(1);
+
+        opacity: 1;
+    }
+
+    35% {
+
+        transform:
+            scale(1.15);
+
+        opacity: 1;
+    }
+
+    65% {
+
+        transform:
+            scale(1.35);
+
+        opacity: 0.8;
+    }
+
+    100% {
+
+        transform:
+            scale(0);
+
+        opacity: 0;
+    }
+}
+
+
+/* ========================================
+   MẢNH BONG BÓNG
+   ======================================== */
+
+.bubble-piece {
+
+    position: absolute;
+
+    width: 28px;
+
+    height: 28px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 40;
+
+    animation:
+        bubblePiece 0.95s
+        ease-out forwards;
+}
+
+@keyframes bubblePiece {
+
+    0% {
+
+        transform:
+            translate(0, 0)
+            scale(1);
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform:
+            translate(
+                var(--move-x),
+                var(--move-y)
+            )
+            scale(0.2);
+
+        opacity: 0;
+    }
+}
+
+/* =========================
+   THÔNG BÁO
+   ========================= */
+
+#result {
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    min-height: 45px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================
+   MÀN HÌNH HOÀN THÀNH
+   ========================= */
+
+#finish-screen {
+
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background:
+        rgba(234, 247, 255, 0.97);
+
+    z-index: 1000;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+/* =========================
+   TIÊU ĐỀ HOÀN THÀNH
+   ========================= */
+
+#finish-title {
+
+    font-size: 48px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   LỜI CHÚC
+   ========================= */
+
+#finish-message {
+
+    font-size: 30px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   NGÔI SAO
+   ========================= */
+
+#final-stars {
+
+    font-size: 45px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   ĐIỂM CUỐI
+   ========================= */
+
+#final-score {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   NÚT CHƠI LẠI
+   ========================= */
+
+#restart-button {
+
+    border: none;
+
+    border-radius: 20px;
+
+    padding: 18px 35px;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: #4A90E2;
+
+    color: white;
+
+    box-shadow:
+        0 5px 10px
+        rgba(0, 0, 0, 0.15);
+
+    touch-action: manipulation;
+}
+
+
+#restart-button:hover {
+
+    transform: scale(1.05);
+}
+
+
+#restart-button:active {
+
+    transform: scale(0.95);
+}
+
+
+/* ==================================================
+   ĐIỆN THOẠI / MÀN HÌNH NHỎ
+   ================================================== */
+
+@media (max-width: 600px) {
+
+    .game {
+
+        padding: 12px;
+    }
+
+
+    h1 {
+
+        font-size: 32px;
+
+        margin-top: 5px;
+    }
+
+
+    #game-info {
+
+        top: 15px;
+
+        left: 15px;
+    }
+
+
+    #progress {
+
+        font-size: 18px;
+    }
+
+
+    #score {
+
+        font-size: 20px;
+    }
+
+
+    #question {
+
+        font-size: 26px;
+
+        padding-left: 110px;
+
+        padding-right: 10px;
+
+        margin-top: 15px;
+    }
+
+
+    #game-board {
+
+        height: 500px;
+
+        border-radius: 20px;
+    }
+
+
+    .bubble {
+
+        width: 95px;
+
+        height: 95px;
+
+        font-size: 40px;
+    }
+
+
+    #result {
+
+        font-size: 26px;
+    }
+
+
+    #finish-title {
+
+        font-size: 40px;
+    }
+
+
+    #finish-message {
+
+        font-size: 26px;
+    }
+
+
+    #final-stars {
+
+        font-size: 38px;
+    }
+
+
+    #final-score {
+
+        font-size: 25px;
+    }
+}
+/* ========================================
+   HIỆU ỨNG ĐÚNG
+   ======================================== */
+
+.correct-effect {
+
+    position: absolute;
+
+    pointer-events: none;
+
+    font-size: 35px;
+
+    z-index: 50;
+
+    animation: correctEffect 0.8s ease-out forwards;
+}
+
+
+@keyframes correctEffect {
+
+    0% {
+
+        transform:
+            scale(0.5)
+            translateY(0);
+
+        opacity: 0;
+    }
+
+    30% {
+
+        transform:
+            scale(1.2)
+            translateY(-20px);
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform:
+            scale(1.5)
+            translateY(-80px);
+
+        opacity: 0;
+    }
+}
+
+
+/* ========================================
+   HIỆU ỨNG SAO
+   ======================================== */
+
+.star-effect {
+
+    position: absolute;
+
+    pointer-events: none;
+
+    font-size: 28px;
+
+    z-index: 50;
+
+    animation:
+        starFly 0.8s ease-out forwards;
+}
+
+
+@keyframes starFly {
+
+    0% {
+
+        transform:
+            scale(0.3)
+            translate(0, 0);
+
+        opacity: 0;
+    }
+
+    30% {
+
+        transform:
+            scale(1.2)
+            translate(0, -15px);
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform:
+            scale(1)
+            translate(var(--move-x), -100px);
+
+        opacity: 0;
+    }
+}
+
+
+/* ========================================
+   THÔNG BÁO ĐÚNG
+   ======================================== */
+
+#result.correct {
+
+    animation:
+        resultCorrect 0.5s ease;
+}
+
+
+@keyframes resultCorrect {
+
+    0% {
+
+        transform: scale(0.7);
+
+        opacity: 0;
+    }
+
+    60% {
+
+        transform: scale(1.15);
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform: scale(1);
+
+        opacity: 1;
+    }
+}
+
+
+/* ========================================
+   THÔNG BÁO SAI
+   ======================================== */
+
+#result.wrong {
+
+    animation:
+        resultWrong 0.35s ease;
+}
+
+
+@keyframes resultWrong {
+
+    0% {
+
+        transform: translateX(0);
+    }
+
+    25% {
+
+        transform: translateX(-8px);
+    }
+
+    50% {
+
+        transform: translateX(8px);
+    }
+
+    75% {
+
+        transform: translateX(-5px);
+    }
+
+    100% {
+
+        transform: translateX(0);
+    }
+}
+/* ========================================
+   MÀN HÌNH CHỌN CHỦ ĐỀ
+   ======================================== */
+
+#topic-screen {
+
+    min-height: 100vh;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background: #eaf7ff;
+}
+
+
+/* ========================================
+   TIÊU ĐỀ
+   ======================================== */
+
+#topic-screen h1 {
+
+    font-size: 48px;
+
+    margin:
+        0
+        0
+        15px
+        0;
+}
+
+
+/* ========================================
+   DÒNG HƯỚNG DẪN
+   ======================================== */
+
+#topic-subtitle {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin-bottom: 30px;
+}
+
+
+/* ========================================
+   DANH SÁCH CHỦ ĐỀ
+   ======================================== */
+
+#topic-list {
+
+    width: 100%;
+
+    max-width: 700px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+/* ========================================
+   NÚT CHỦ ĐỀ
+   ======================================== */
+
+.topic-button {
+
+    border: none;
+
+    border-radius: 25px;
+
+    background: white;
+
+    min-height: 170px;
+
+    padding: 20px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow:
+        0 6px 15px
+        rgba(0, 0, 0, 0.12);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+
+/* ========================================
+   ICON
+   ======================================== */
+
+.topic-icon {
+
+    font-size: 65px;
+
+    line-height: 1;
+
+    margin-bottom: 15px;
+}
+
+
+/* ========================================
+   TÊN CHỦ ĐỀ
+   ======================================== */
+
+.topic-name {
+
+    font-size: 26px;
+
+    font-weight: bold;
+}
+
+
+/* ========================================
+   KHI RÊ CHUỘT
+   ======================================== */
+
+.topic-button:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 10px 20px
+        rgba(0, 0, 0, 0.16);
+}
+
+
+/* ========================================
+   KHI CHẠM
+   ======================================== */
+
+.topic-button:active {
+
+    transform:
+        scale(0.94);
+}
+
+
+/* ========================================
+   ĐIỆN THOẠI
+   ======================================== */
+
+@media (max-width: 600px) {
+
+    #topic-screen {
+
+        padding: 15px;
+    }
+
+
+    #topic-screen h1 {
+
+        font-size: 38px;
+    }
+
+
+    #topic-subtitle {
+
+        font-size: 22px;
+
+        margin-bottom: 20px;
+    }
+
+
+    #topic-list {
+
+        gap: 12px;
+    }
+
+
+    .topic-button {
+
+        min-height: 135px;
+
+        border-radius: 20px;
+
+        padding: 12px;
+    }
+
+
+    .topic-icon {
+
+        font-size: 48px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .topic-name {
+
+        font-size: 21px;
+    }
+}
+/* ========================================
+   NÚT QUAY LẠI MENU
+   ======================================== */
+
+#back-button {
+
+    position: fixed;
+
+    top: 15px;
+
+    right: 15px;
+
+    z-index: 100;
+
+    border: none;
+
+    border-radius: 18px;
+
+    padding: 10px 18px;
+
+    background: white;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0, 0, 0, 0.15);
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+
+#back-button:active {
+
+    transform:
+        scale(0.92);
+}
+
+
+@media (max-width: 600px) {
+
+    #back-button {
+
+        top: 10px;
+
+        right: 10px;
+
+        font-size: 17px;
+
+        padding: 8px 14px;
+
+        border-radius: 15px;
+    }
+}
